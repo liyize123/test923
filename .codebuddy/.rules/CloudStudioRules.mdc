@@ -1,0 +1,29 @@
+---
+description: Rule for deploying the current project to CloudStudio.
+alwaysApply: false
+enabled: true
+updatedAt: 2025-09-23T03:05:47.916Z
+---
+
+Deploy the current project to CloudStudio.
+Follow the deployment workflow:
+<workflow>
+1. **MUST test locally first**: Before deploying, verify the project works correctly in local preview/browser.
+2. **Deploy content MUST match preview content**: The deployed files must be identical to what was actually viewed and tested in the browser.
+3. **Choose deployment scope based on preview method**:
+   - If you previewed a built directory (e.g., opened dist/index.html), deploy the entire build folder
+   - If you previewed specific files (e.g., opened individual HTML file), use 'paths' parameter to deploy only those files and their dependencies
+   - If you used development server (npm run dev), deploy the entire project
+4. **File consistency check**: Ensure all files that were loaded in the browser preview are included in deployment
+5. Deploy using cloud studio deploy tools with appropriate file scope.
+6. If deployment fails, analyze the failure reason. Multiple failures need to feedback to user.
+</workflow>
+
+**File Selection Strategy**:
+- **Preview method determines deployment scope**: Match exactly what was tested in browser
+- **Built project preview**: Deploy entire build directory (dist/, build/, etc.)
+- **Individual file preview**: Use 'paths' parameter for specific files + dependencies
+- **Development server preview**: Deploy entire project with source code
+- **Critical rule**: Never deploy files that weren't part of the successful browser preview
+
+**Important**: Files and directories listed in .gitignore, as well as dependency libraries (node_modules, etc.), will be automatically excluded from deployment uploads. Only tracked project files will be deployed to the remote environment.
